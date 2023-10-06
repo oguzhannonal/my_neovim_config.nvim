@@ -67,7 +67,15 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   -- NOTE: First, some plugins that don't require any configuration
   --
-
+  {
+    "folke/trouble.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    },
+  },
   {
     'akinsho/toggleterm.nvim',
     version = "*",
@@ -176,7 +184,16 @@ require('lazy').setup({
   },
 
   -- Useful plugin to show you pending keybinds.
+  -- install null-ls
+
   { 'folke/which-key.nvim',  opts = {} },
+  {
+    "jose-elias-alvarez/null-ls.nvim",
+    config = function()
+      require("null-ls").setup()
+    end,
+    dependencies = { "nvim-lua/plenary.nvim" },
+  },
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -348,13 +365,15 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
+--
+local trouble = require("trouble.providers.telescope")
+
+
 require('telescope').setup {
   defaults = {
     mappings = {
-      i = {
-        ['<C-u>'] = false,
-        ['<C-d>'] = false,
-      },
+      i = { ["<c-t>"] = trouble.open_with_trouble },
+      n = { ["<c-t>"] = trouble.open_with_trouble },
     },
   },
 }
@@ -387,7 +406,8 @@ vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = 
 vim.defer_fn(function()
   require('nvim-treesitter.configs').setup {
     -- Add languages to be installed here that you want installed for treesitter
-    ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim' },
+    ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim',
+      'vue', 'html', 'scss', 'css' },
 
     -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
     auto_install = false,
@@ -453,7 +473,7 @@ end, 0)
 
 -- [[ Configure LSP ]]
 --  This function gets run when an LSP connects to a particular buffer.
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
   -- NOTE: Remember that lua is a real programming language, and as such it is possible
   -- to define small helper and utility functions so you don't have to repeat yourself
   -- many times.
@@ -467,7 +487,17 @@ local on_attach = function(_, bufnr)
 
     vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
   end
-
+  -- if client name is volar, disable formattingOptions
+  if client.name == 'volar' then
+    client.server_capabilities.documentRangeFormatting = false
+    client.server_capabilities.documentFormatting = false
+  end
+  if client.name == 'eslint' then
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      buffer = bufnr,
+      command = "EslintFixAll",
+    })
+  end
   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
@@ -522,12 +552,8 @@ local servers = {
   -- rust_analyzer = {},
   -- tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
-  volar = {
-    filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
-  },
-  eslint = {
-    filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'vue', 'json' },
-  },
+  eslint = {},
+  volar = {},
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },
@@ -549,7 +575,6 @@ local mason_lspconfig = require 'mason-lspconfig'
 mason_lspconfig.setup {
   ensure_installed = vim.tbl_keys(servers),
 }
-
 mason_lspconfig.setup_handlers {
   function(server_name)
     require('lspconfig')[server_name].setup {

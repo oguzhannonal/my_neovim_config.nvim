@@ -38,6 +38,11 @@ return {
         local client = vim.lsp.get_client_by_id(client_id)
         local bufnr = args.buf
 
+        if client.name == 'tsserver' then
+          return
+        end
+        if client.name == 'volar' then return end
+        if client.name == 'eslint' then return end
         -- Only attach to clients that support document formatting
         if not client.server_capabilities.documentFormattingProvider then
           return
@@ -45,11 +50,6 @@ return {
 
         -- Tsserver usually works poorly. Sorry you work with bad languages
         -- You can remove this line if you know what you're doing :)
-        if client.name == 'tsserver' then
-          return
-        end
-        if client.name == 'volar' then return end
-        if client.name == 'eslint' then return end
         -- Create an autocmd that will run *before* we save the buffer.
         --  Run the formatting command for the LSP that has just attached.
         vim.api.nvim_create_autocmd('BufWritePre', {
