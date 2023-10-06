@@ -58,7 +58,6 @@ if not vim.loop.fs_stat(lazypath) then
   }
 end
 vim.opt.rtp:prepend(lazypath)
-
 -- NOTE: Here is where you install your plugins.
 --  You can configure plugins using the `config` key.
 --
@@ -67,6 +66,16 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   -- NOTE: First, some plugins that don't require any configuration
   --
+  --
+  {
+    'stevearc/conform.nvim',
+    opts = {},
+  },
+  {
+    'windwp/nvim-autopairs',
+    event = "InsertEnter",
+    opts = {} -- this is equalent to setup({}) function
+  },
   {
     "folke/trouble.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -186,7 +195,7 @@ require('lazy').setup({
   -- Useful plugin to show you pending keybinds.
   -- install null-ls
 
-  { 'folke/which-key.nvim',  opts = {} },
+  { 'folke/which-key.nvim',   opts = {} },
   {
     "jose-elias-alvarez/null-ls.nvim",
     config = function()
@@ -237,10 +246,20 @@ require('lazy').setup({
     'navarasu/onedark.nvim',
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'onedark'
     end,
   },
+  {
 
+    "sainnhe/gruvbox-material",
+    priority = 1000,
+    config = function()
+      vim.o.background = "dark" -- or "light" for light mode
+
+      vim.cmd.colorscheme 'gruvbox-material'
+      vim.cmd("let g:gruvbox_material_background= 'hard'")
+      vim.cmd("let g:gruvbox_material_transparent_background=0")
+    end,
+  },
   {
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
@@ -255,8 +274,9 @@ require('lazy').setup({
     },
   },
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {} },
+  { 'numToStr/Comment.nvim',  opts = {} },
 
+  { 'windwp/nvim-ts-autotag', opts = {} },
   -- Fuzzy Finder (files, lsp, etc)
   {
     'nvim-telescope/telescope.nvim',
@@ -290,7 +310,7 @@ require('lazy').setup({
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.
-  require 'kickstart.plugins.autoformat',
+  -- require 'kickstart.plugins.autoformat',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    You can use this folder to prevent any conflicts with this init.lua if you're interested in keeping
@@ -301,6 +321,20 @@ require('lazy').setup({
   { import = 'custom.plugins' },
 }, {})
 
+require("conform").setup({
+  format_on_save = {
+    lsp_fallback = true,
+  },
+  formatters_by_ft = {
+    lua = { "stylua" },
+    vue = { "eslint_d", "prettierd" },
+    -- Conform will run multiple formatters sequentially
+    python = { "isort", "black" },
+    -- Use a sub-list to run only the first available formatter
+    javascript = { "eslint_d", "prettierd" },
+    typescript = { { "prettierd", "prettier" } },
+  },
+})
 -- [[ Setting options ]]
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
@@ -411,7 +445,7 @@ vim.defer_fn(function()
 
     -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
     auto_install = false,
-
+    autotag = { enable = true },
     highlight = { enable = true },
     indent = { enable = true },
     incremental_selection = {
@@ -488,18 +522,22 @@ local on_attach = function(client, bufnr)
     vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
   end
   -- if client name is volar, disable formattingOptions
-  if client.name == 'volar' then
-    client.server_capabilities.documentRangeFormatting = false
-    client.server_capabilities.documentFormatting = false
-  end
-  if client.name == 'eslint' then
-    vim.api.nvim_create_autocmd("BufWritePre", {
-      buffer = bufnr,
-      command = "EslintFixAll",
-    })
-  end
+  -- if client.name == 'volar' then
+  --   client.server_capabilities.documentRangeFormatting = false
+  --   client.server_capabilities.documentFormatting = false
+  -- end
+  -- if client.name == 'eslint' then
+  --   vim.api.nvim_create_autocmd("BufWritePre", {
+  --     buffer = bufnr,
+  --     command = "EslintFixAll",
+  --   })
+  -- end
   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+
+
+
+
 
   nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
   nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
