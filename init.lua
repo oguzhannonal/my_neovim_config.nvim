@@ -522,7 +522,12 @@ local servers = {
   -- rust_analyzer = {},
   -- tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
-
+  volar = {
+    filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
+  },
+  eslint = {
+    filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'vue', 'json' },
+  },
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },
