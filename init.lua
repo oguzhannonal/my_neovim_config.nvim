@@ -65,6 +65,10 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   -- NOTE: First, some plugins that don't require any configuration
   {
+    'kevinhwang91/nvim-ufo',
+    dependencies = 'kevinhwang91/promise-async',
+  },
+  {
     'acksld/nvim-neoclip.lua',
     dependencies = {
       { 'kkharji/sqlite.lua', module = 'sqlite' },
