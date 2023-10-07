@@ -39,7 +39,7 @@ function _G.git_diff(opts)
     })
     :find()
 end
-vim.api.nvim_set_keymap('n', '<leader>gd', ':lua git_diff()<CR>', { noremap = true, silent = true })
+nmap('<leader>gd', ':lua git_diff()<CR>', 'Changed Files')
 -- trouble
 
 nmap('<leader>xx', function()
@@ -60,4 +60,9 @@ end, 'Trouble Loclist')
 nmap('gR', function()
   require('trouble').open 'lsp_references'
 end, 'Trouble LSP References')
+
+-- diffview keymaps
+nmap('<leader>gv', function()
+  require('diffview').open()
+end, 'Diffview Open')
 return {}
