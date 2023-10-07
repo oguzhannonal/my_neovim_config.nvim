@@ -81,10 +81,6 @@ require('lazy').setup({
     end,
   },
   {
-    'stevearc/conform.nvim',
-    opts = {},
-  },
-  {
     'windwp/nvim-autopairs',
     event = 'InsertEnter',
     opts = {}, -- this is equalent to setup({}) function
@@ -386,20 +382,6 @@ require('lazy').setup({
   { import = 'custom.plugins' },
 }, {})
 
-require('conform').setup {
-  format_on_save = {
-    lsp_fallback = false,
-  },
-  formatters_by_ft = {
-    lua = { 'stylua' },
-    vue = { 'prettierd' },
-    -- Conform will run multiple formatters sequentially
-    python = { 'isort', 'black' },
-    -- Use a sub-list to run only the first available formatter
-    javascript = { 'prettierd' },
-    typescript = { { 'prettierd', 'prettier' } },
-  },
-}
 -- [[ Setting options ]]
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
@@ -469,6 +451,7 @@ local trouble = require 'trouble.providers.telescope'
 local lspconfig = require 'lspconfig'
 lspconfig.eslint.setup {
   --- ...
+
   on_attach = function(client, bufnr)
     vim.api.nvim_create_autocmd('BufWritePre', {
       buffer = bufnr,
@@ -596,8 +579,8 @@ local on_attach = function(client, bufnr)
   end
   -- if client name is volar, disable formattingOptions
   -- if client.name == 'volar' then
-  --   client.server_capabilities.documentRangeFormatting = false
-  --   client.server_capabilities.documentFormatting = false
+  --   client.server_capabilities.documentRangeFormattingProvider = false
+  --   client.server_capabilities.documentFormattingProvider = false
   -- end
   -- if client.name == 'eslint' then
   --   print 'eslint'
@@ -606,7 +589,7 @@ local on_attach = function(client, bufnr)
   --     pattern = { '*.js', '*.jsx', '*.ts', '*.tsx', '*.vue' },
   --     command = 'EslintFixAll',
   --   })
-  -- end
+  --/ end
   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 

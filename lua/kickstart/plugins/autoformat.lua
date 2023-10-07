@@ -1,7 +1,3 @@
--- -- autoformat.lua
--- --
--- -- Use your language server to automatically format your code on save.
--- -- Adds additional commands as well to manage the behavior
 -- return {
 --   'neovim/nvim-lspconfig',
 --   config = function()
@@ -41,8 +37,12 @@
 --         if client.name == 'tsserver' then
 --           return
 --         end
---         if client.name == 'volar' then return end
---         if client.name == 'eslint' then return end
+--         if client.name == 'volar' then
+--           return
+--         end
+--         if client.name == 'eslint' then
+--           return
+--         end
 --         -- Only attach to clients that support document formatting
 --         if not client.server_capabilities.documentFormattingProvider then
 --           return
@@ -72,4 +72,3 @@
 --     })
 --   end,
 -- }
-return {}
