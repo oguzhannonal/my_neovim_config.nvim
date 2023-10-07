@@ -42,7 +42,6 @@ P.S. You can delete this when you're done too. It's your config now :)
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
 --    `:help lazy.nvim.txt` for more info
@@ -65,20 +64,27 @@ vim.opt.rtp:prepend(lazypath)
 --    as they will be available in your neovim runtime.
 require('lazy').setup({
   -- NOTE: First, some plugins that don't require any configuration
-  --
-  --
+  {
+    'acksld/nvim-neoclip.lua',
+    dependencies = {
+      { 'kkharji/sqlite.lua', module = 'sqlite' },
+    },
+    config = function()
+      require('neoclip').setup()
+    end,
+  },
   {
     'stevearc/conform.nvim',
     opts = {},
   },
   {
     'windwp/nvim-autopairs',
-    event = "InsertEnter",
-    opts = {} -- this is equalent to setup({}) function
+    event = 'InsertEnter',
+    opts = {}, -- this is equalent to setup({}) function
   },
   {
-    "folke/trouble.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    'folke/trouble.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
     opts = {
       -- your configuration comes here
       -- or leave it empty to use the default settings
@@ -87,42 +93,42 @@ require('lazy').setup({
   },
   {
     'akinsho/toggleterm.nvim',
-    version = "*",
+    version = '*',
     opts = {
       direction = 'float',
       open_mapping = [[<c-\>]],
-    }
+    },
   },
   {
     'echasnovski/mini.bracketed',
     version = '*',
     config = function()
       require('mini.bracketed').setup()
-    end
+    end,
   },
   {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    event = "InsertEnter",
+    'zbirenbaum/copilot.lua',
+    cmd = 'Copilot',
+    event = 'InsertEnter',
     config = function()
-      require("copilot").setup({
+      require('copilot').setup {
         panel = {
           keymap = {
-            jump_next = "<c-j>",
-            jump_prev = "<c-k>",
-            accept = "<c-l>",
-            refresh = "r",
-            open = "<M-CR>",
+            jump_next = '<c-j>',
+            jump_prev = '<c-k>',
+            accept = '<c-l>',
+            refresh = 'r',
+            open = '<M-CR>',
           },
         },
         suggestion = {
           enabled = true,
           auto_trigger = true,
           keymap = {
-            accept = "<c-l>",
-            next = "<c-j>",
-            prev = "<c-k>",
-            dismiss = "<c-h>",
+            accept = '<c-l>',
+            next = '<c-j>',
+            prev = '<c-k>',
+            dismiss = '<c-h>',
           },
         },
         filetypes = {
@@ -134,25 +140,47 @@ require('lazy').setup({
           hgcommit = false,
           svn = false,
           cvs = false,
-          ["."] = false,
+          ['.'] = false,
         },
-      })
+      }
     end,
   },
   {
-    "nvim-tree/nvim-tree.lua",
-    version = "*",
+    'nvim-telescope/telescope.nvim',
+    dependencies = {
+      {
+        'nvim-telescope/telescope-live-grep-args.nvim',
+        -- This will not install any breaking changes.
+        -- For major updates, this must be adjusted manually.
+        version = '^1.0.0',
+      },
+    },
+  },
+  {
+    'nvim-tree/nvim-tree.lua',
+    version = '*',
     lazy = false,
     dependencies = {
-      "nvim-tree/nvim-web-devicons",
+      'nvim-tree/nvim-web-devicons',
     },
     config = function()
-      require("nvim-tree").setup {}
+      require('nvim-tree').setup {}
+    end,
+  },
+  {
+    'echasnovski/mini.surround',
+    version = '*',
+    config = function()
+      require('mini.surround').setup()
+    end,
+  },
+  {
+    'ThePrimeagen/harpoon',
+    config = function()
+      require('harpoon').setup {}
     end,
   },
   -- Git related plugins
-  'tpope/vim-fugitive',
-  'tpope/vim-rhubarb',
 
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
@@ -169,7 +197,7 @@ require('lazy').setup({
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim',       tag = 'legacy', opts = {} },
+      { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
@@ -177,7 +205,7 @@ require('lazy').setup({
   },
 
   {
-    -- Autocompletion
+
     'hrsh7th/nvim-cmp',
     dependencies = {
       -- Snippet Engine & its associated nvim-cmp source
@@ -195,69 +223,106 @@ require('lazy').setup({
   -- Useful plugin to show you pending keybinds.
   -- install null-ls
 
-  { 'folke/which-key.nvim',   opts = {} },
+  { 'folke/which-key.nvim', opts = {} },
   {
-    "jose-elias-alvarez/null-ls.nvim",
+    'jose-elias-alvarez/null-ls.nvim',
     config = function()
-      require("null-ls").setup()
+      require('null-ls').setup()
     end,
-    dependencies = { "nvim-lua/plenary.nvim" },
+    dependencies = { 'nvim-lua/plenary.nvim' },
   },
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     opts = {
       -- See `:help gitsigns.txt`
-      signs = {
-        add = { text = '+' },
-        change = { text = '~' },
-        delete = { text = '_' },
-        topdelete = { text = '‾' },
-        changedelete = { text = '~' },
-      },
+      -- signs = {
+      --   add = { text = '+' },
+      --   change = { text = '~' },
+      --   delete = { text = '_' },
+      --   topdelete = { text = '‾' },
+      --   changedelete = { text = '~' },
+      -- },
       on_attach = function(bufnr)
         vim.keymap.set('n', '<leader>hp', require('gitsigns').preview_hunk, { buffer = bufnr, desc = 'Preview git hunk' })
 
         -- don't override the built-in and fugitive keymaps
         local gs = package.loaded.gitsigns
         vim.keymap.set({ 'n', 'v' }, ']c', function()
-          if vim.wo.diff then return ']c' end
-          vim.schedule(function() gs.next_hunk() end)
+          if vim.wo.diff then
+            return ']c'
+          end
+          vim.schedule(function()
+            gs.next_hunk()
+          end)
           return '<Ignore>'
-        end, { expr = true, buffer = bufnr, desc = "Jump to next hunk" })
+        end, { expr = true, buffer = bufnr, desc = 'Jump to next hunk' })
         vim.keymap.set({ 'n', 'v' }, '[c', function()
-          if vim.wo.diff then return '[c' end
-          vim.schedule(function() gs.prev_hunk() end)
+          if vim.wo.diff then
+            return '[c'
+          end
+          vim.schedule(function()
+            gs.prev_hunk()
+          end)
           return '<Ignore>'
-        end, { expr = true, buffer = bufnr, desc = "Jump to previous hunk" })
+        end, { expr = true, buffer = bufnr, desc = 'Jump to previous hunk' })
       end,
     },
   },
-
+  {
+    'lukas-reineke/indent-blankline.nvim',
+    opts = {
+      indent = {
+        char = '│',
+        tab_char = '│',
+      },
+      scope = { enabled = false },
+      exclude = {
+        filetypes = {
+          'help',
+          'alpha',
+          'dashboard',
+          'neo-tree',
+          'Trouble',
+          'lazy',
+          'mason',
+          'notify',
+          'toggleterm',
+          'lazyterm',
+        },
+      },
+    },
+    main = 'ibl',
+  },
   {
     'echasnovski/mini.indentscope',
     version = '*',
+    opts = {
+      symbol = '|',
+      options = {
+        try_as_border = true,
+      },
+    },
     config = function()
       require('mini.indentscope').setup()
-    end
+    end,
   },
   {
     -- Theme inspired by Atom
     'navarasu/onedark.nvim',
     priority = 1000,
-    config = function()
-    end,
+    config = function() end,
   },
   {
 
-    "sainnhe/gruvbox-material",
+    'sainnhe/gruvbox-material',
     priority = 1000,
     config = function()
-      vim.o.background = "dark" -- or "light" for light mode
+      vim.o.background = 'dark' -- or "light" for light mode
 
       vim.cmd.colorscheme 'gruvbox-material'
-      vim.cmd("let g:gruvbox_material_background= 'hard'")
-      vim.cmd("let g:gruvbox_material_transparent_background=0")
+      vim.cmd "let g:gruvbox_material_background= 'hard'"
+      vim.cmd 'let g:gruvbox_material_transparent_background=0'
     end,
   },
   {
@@ -267,14 +332,13 @@ require('lazy').setup({
     opts = {
       options = {
         icons_enabled = false,
-        theme = 'onedark',
         component_separators = '|',
         section_separators = '',
       },
     },
   },
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim',  opts = {} },
+  { 'numToStr/Comment.nvim', opts = {} },
 
   { 'windwp/nvim-ts-autotag', opts = {} },
   -- Fuzzy Finder (files, lsp, etc)
@@ -321,20 +385,20 @@ require('lazy').setup({
   { import = 'custom.plugins' },
 }, {})
 
-require("conform").setup({
+require('conform').setup {
   format_on_save = {
-    lsp_fallback = true,
+    lsp_fallback = false,
   },
   formatters_by_ft = {
-    lua = { "stylua" },
-    vue = { "eslint_d", "prettierd" },
+    lua = { 'stylua' },
+    vue = { 'prettierd' },
     -- Conform will run multiple formatters sequentially
-    python = { "isort", "black" },
+    python = { 'isort', 'black' },
     -- Use a sub-list to run only the first available formatter
-    javascript = { "eslint_d", "prettierd" },
-    typescript = { { "prettierd", "prettier" } },
+    javascript = { 'prettierd' },
+    typescript = { { 'prettierd', 'prettier' } },
   },
-})
+}
 -- [[ Setting options ]]
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
@@ -400,21 +464,31 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
 --
-local trouble = require("trouble.providers.telescope")
-
-
+local trouble = require 'trouble.providers.telescope'
+local lspconfig = require 'lspconfig'
+lspconfig.eslint.setup {
+  --- ...
+  on_attach = function(client, bufnr)
+    vim.api.nvim_create_autocmd('BufWritePre', {
+      buffer = bufnr,
+      command = 'EslintFixAll',
+    })
+  end,
+}
 require('telescope').setup {
   defaults = {
     mappings = {
-      i = { ["<c-t>"] = trouble.open_with_trouble },
-      n = { ["<c-t>"] = trouble.open_with_trouble },
+      i = { ['<c-t>'] = trouble.open_with_trouble },
+      n = { ['<c-t>'] = trouble.open_with_trouble },
     },
   },
 }
 
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
-
+pcall(require('telescope').load_extension, 'neoclip')
+pcall(require('telescope').load_extension, 'live_grep_args')
+pcall(require('telescope').load_extension, 'harpoon')
 -- See `:help telescope.builtin`
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
 vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
@@ -440,8 +514,7 @@ vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = 
 vim.defer_fn(function()
   require('nvim-treesitter.configs').setup {
     -- Add languages to be installed here that you want installed for treesitter
-    ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim',
-      'vue', 'html', 'scss', 'css' },
+    ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'vue', 'html', 'scss', 'css' },
 
     -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
     auto_install = false,
@@ -504,7 +577,6 @@ vim.defer_fn(function()
   }
 end, 0)
 
-
 -- [[ Configure LSP ]]
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(client, bufnr)
@@ -527,17 +599,15 @@ local on_attach = function(client, bufnr)
   --   client.server_capabilities.documentFormatting = false
   -- end
   -- if client.name == 'eslint' then
-  --   vim.api.nvim_create_autocmd("BufWritePre", {
+  --   print 'eslint'
+  --   vim.api.nvim_create_autocmd('BufWritePre', {
   --     buffer = bufnr,
-  --     command = "EslintFixAll",
+  --     pattern = { '*.js', '*.jsx', '*.ts', '*.tsx', '*.vue' },
+  --     command = 'EslintFixAll',
   --   })
   -- end
   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-
-
-
-
 
   nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
   nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
@@ -558,14 +628,15 @@ local on_attach = function(client, bufnr)
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   end, '[W]orkspace [L]ist Folders')
 
-  -- Create a command `:Format` local to the LSP buffer
-  vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-    vim.lsp.buf.format()
-  end, { desc = 'Format current buffer with LSP' })
+  -- vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
+  --   vim.lsp.buf.format()
+  -- end, { desc = 'Format current buffer with LSP' })
 end
 
 -- document existing key chains
-require('which-key').register({
+require('which-key').register {
+  ['<leader>p'] = { '<cmd>Telescope neoclip<cr>', 'browse' },
+  ['<leader>ss'] = { '<cmd>Telescope live_grep_args<cr>', 'Search current buffer' },
   ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
   ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
   ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
@@ -573,7 +644,7 @@ require('which-key').register({
   ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
   ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
   ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
-})
+}
 
 -- Enable the following language servers
 --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -590,7 +661,6 @@ local servers = {
   -- rust_analyzer = {},
   -- tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
-  eslint = {},
   volar = {},
   lua_ls = {
     Lua = {
@@ -621,7 +691,7 @@ mason_lspconfig.setup_handlers {
       settings = servers[server_name],
       filetypes = (servers[server_name] or {}).filetypes,
     }
-  end
+  end,
 }
 
 -- [[ Configure nvim-cmp ]]
@@ -671,6 +741,5 @@ cmp.setup {
     { name = 'luasnip' },
   },
 }
-
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
