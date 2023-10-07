@@ -240,13 +240,13 @@ require('lazy').setup({
     'lewis6991/gitsigns.nvim',
     opts = {
       -- See `:help gitsigns.txt`
-      -- signs = {
-      --   add = { text = '+' },
-      --   change = { text = '~' },
-      --   delete = { text = '_' },
-      --   topdelete = { text = '‾' },
-      --   changedelete = { text = '~' },
-      -- },
+      signs = {
+        add = { text = '+' },
+        change = { text = '~' },
+        delete = { text = '_' },
+        topdelete = { text = '‾' },
+        changedelete = { text = '~' },
+      },
       on_attach = function(bufnr)
         vim.keymap.set('n', '<leader>hp', require('gitsigns').preview_hunk, { buffer = bufnr, desc = 'Preview git hunk' })
 
@@ -310,12 +310,6 @@ require('lazy').setup({
     config = function()
       require('mini.indentscope').setup()
     end,
-  },
-  {
-    -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
-    priority = 1000,
-    config = function() end,
   },
   {
 
@@ -408,7 +402,7 @@ require('conform').setup {
 -- NOTE: You can change these options as you wish!
 
 -- Set highlight on search
-vim.o.hlsearch = false
+vim.o.hlsearch = true
 
 -- Make line numbers default
 vim.wo.number = true
@@ -641,13 +635,14 @@ end
 require('which-key').register {
   ['<leader>p'] = { '<cmd>Telescope neoclip<cr>', 'browse' },
   ['<leader>ss'] = { '<cmd>Telescope live_grep_args<cr>', 'Search current buffer' },
-  ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
-  ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-  ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
+  ['<leader>x'] = { name = 'Trouble', _ = 'which_key_ignore' },
+  ['<leader>c'] = { name = 'Code', _ = 'which_key_ignore' },
+  ['<leader>d'] = { name = 'Document', _ = 'which_key_ignore' },
+  ['<leader>g'] = { name = 'Git', _ = 'which_key_ignore' },
   ['<leader>h'] = { name = 'More git', _ = 'which_key_ignore' },
-  ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
-  ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-  ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
+  ['<leader>r'] = { name = 'Rename', _ = 'which_key_ignore' },
+  ['<leader>s'] = { name = 'Search', _ = 'which_key_ignore' },
+  ['<leader>w'] = { name = 'Workspace', _ = 'which_key_ignore' },
 }
 
 -- Enable the following language servers

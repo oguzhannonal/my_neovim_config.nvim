@@ -1,16 +1,8 @@
 local nmap = function(keys, func, desc)
-  if desc then
-    desc = 'LSP: ' .. desc
-  end
-
-  vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
+  vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc, noremap = true, silent = true })
 end
 local imap = function(keys, func, desc)
-  if desc then
-    desc = 'LSP: ' .. desc
-  end
-
-  vim.keymap.set('i', keys, func, { buffer = bufnr, desc = desc })
+  vim.keymap.set('i', keys, func, { buffer = bufnr, desc = desc, noremap = true, silent = true })
 end
 
 nmap('<leader>e', '<Cmd>:NvimTreeToggle<cr>', 'File Explorer')
@@ -23,8 +15,10 @@ nmap('<C-l>', '<C-w>l', 'Resize Right')
 imap('jj', '<Esc>', 'Exit Insert Mode')
 -- close buffer
 nmap('<leader>q', '<Cmd>:bd<cr>', 'Close Buffer')
+-- :noh
+nmap('<leader>n', '<Cmd>:noh<cr>', 'No Highlight')
 -- harpoon keymaps
-nmap('<leader>hh', '<Cmd>:lua require("harpoon.ui").toggle_quick_menu()<cr>', 'Harpoon Menu')
+nmap('<leader>hh', '<Cmd>:lua require("harpoon.ui").toggle_quick_menu()<cr>', 'Harpoon Quick Menu')
 nmap('<leader>ha', '<Cmd>:lua require("harpoon.mark").add_file()<cr>', 'Harpoon Add File')
 nmap('<A-1>', '<Cmd>:lua require("harpoon.ui").nav_file(1)<cr>', 'Harpoon Nav File 1')
 nmap('<A-2>', '<Cmd>:lua require("harpoon.ui").nav_file(2)<cr>', 'Harpoon Nav File 2')
@@ -46,5 +40,24 @@ function _G.git_diff(opts)
     :find()
 end
 vim.api.nvim_set_keymap('n', '<leader>gd', ':lua git_diff()<CR>', { noremap = true, silent = true })
+-- trouble
 
+nmap('<leader>xx', function()
+  require('trouble').open()
+end, 'Trouble Toggle')
+nmap('<leader>xw', function()
+  require('trouble').open 'workspace_diagnostics'
+end, 'Trouble Workspace Diagnostics')
+nmap('<leader>xd', function()
+  require('trouble').open 'document_diagnostics'
+end, 'Trouble Document Diagnostics')
+nmap('<leader>xq', function()
+  require('trouble').open 'quickfix'
+end, 'Trouble Quickfix')
+nmap('<leader>xl', function()
+  require('trouble').open 'loclist'
+end, 'Trouble Loclist')
+nmap('gR', function()
+  require('trouble').open 'lsp_references'
+end, 'Trouble LSP References')
 return {}
