@@ -1,3 +1,4 @@
+---@diagnostic disable: missing-fields
 --[[
 
 =====================================================================
@@ -34,7 +35,6 @@ are first encountering a few different constructs in your nvim config.
 
 I hope you enjoy your Neovim journey,
 - TJ
-
 P.S. You can delete this when you're done too. It's your config now :)
 --]]
 -- Set <space> as the leader key
@@ -636,13 +636,13 @@ end
 
 -- document existing key chains
 require('which-key').register {
-  ['<leader>p'] = { '<cmd>Telescope neoclip<cr>', 'browse' },
-  ['<leader>ss'] = { '<cmd>Telescope live_grep_args<cr>', 'Search current buffer' },
+  ['<leader>p'] = { '<cmd>Telescope neoclip<cr>', 'Browse Register' },
+  ['<leader>ss'] = { '<cmd>Telescope live_grep_args<cr>', 'Live grep args' },
   ['<leader>x'] = { name = 'Trouble', _ = 'which_key_ignore' },
   ['<leader>c'] = { name = 'Code', _ = 'which_key_ignore' },
   ['<leader>d'] = { name = 'Document', _ = 'which_key_ignore' },
   ['<leader>g'] = { name = 'Git', _ = 'which_key_ignore' },
-  ['<leader>h'] = { name = 'More git', _ = 'which_key_ignore' },
+  ['<leader>h'] = { name = 'Harpoon', _ = 'which_key_ignore' },
   ['<leader>r'] = { name = 'Rename', _ = 'which_key_ignore' },
   ['<leader>s'] = { name = 'Search', _ = 'which_key_ignore' },
   ['<leader>w'] = { name = 'Workspace', _ = 'which_key_ignore' },
@@ -739,8 +739,10 @@ cmp.setup {
     end, { 'i', 's' }),
   },
   sources = {
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
+    { name = 'nvim_lsp', max_item_count = 5 },
+    { name = 'buffer', max_item_count = 5 },
+    { name = 'luasnip', max_item_count = 5 },
+    { name = 'friendly_snippets', max_item_count = 5 },
   },
 }
 -- The line beneath this is called `modeline`. See `:help modeline`
