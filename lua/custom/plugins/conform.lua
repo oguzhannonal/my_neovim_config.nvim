@@ -5,7 +5,7 @@ return {
     formatters_by_ft = {
       typescript = { 'prettierd' },
       typescriptreact = { 'prettierd' },
-      javascript = { 'prettierd', 'eslint_d' },
+      javascript = { 'prettierd' },
       javascriptreact = { 'prettierd' },
       json = { 'prettierd' },
       html = { 'prettierd' },
@@ -15,7 +15,7 @@ return {
       yaml = { 'prettierd' },
       sh = { 'beautysh' },
       zsh = { 'beautysh' },
-      vue = { 'prettierd', 'eslint_d' },
+      vue = { 'prettierd' },
       lua = { 'stylua' },
     },
     format_on_save = function(bufnr)
