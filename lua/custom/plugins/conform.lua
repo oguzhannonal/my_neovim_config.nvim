@@ -5,7 +5,7 @@ return {
     formatters_by_ft = {
       typescript = { 'prettierd' },
       typescriptreact = { 'prettierd' },
-      javascript = { 'prettierd' },
+      javascript = { 'prettierd', 'eslint_d' },
       javascriptreact = { 'prettierd' },
       json = { 'prettierd' },
       html = { 'prettierd' },
@@ -15,7 +15,7 @@ return {
       yaml = { 'prettierd' },
       sh = { 'beautysh' },
       zsh = { 'beautysh' },
-      vue = { 'prettier' },
+      vue = { 'prettierd', 'eslint_d' },
       lua = { 'stylua' },
     },
     format_on_save = function(bufnr)
@@ -25,8 +25,12 @@ return {
         return
       end
 
-      return { lsp_fallback = true, async = true }
+      return { lsp_fallback = true, async = true, timeout_ms = 5000 }
     end,
-    format_after_save = { lsp_fallback = true },
+    config = function(_, opts)
+      local util = require 'conform.util'
+      util.add_formatter_args(require 'conform.formatters.eslint_d', { '--cache' })
+      require('conform').setup(opts)
+    end,
   },
 }

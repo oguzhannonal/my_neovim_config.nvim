@@ -452,12 +452,12 @@ local lspconfig = require 'lspconfig'
 lspconfig.eslint.setup {
   --- ...
 
-  on_attach = function(client, bufnr)
-    vim.api.nvim_create_autocmd('BufWritePre', {
-      buffer = bufnr,
-      command = 'EslintFixAll',
-    })
-  end,
+  -- on_attach = function(client, bufnr)
+  --   vim.api.nvim_create_autocmd('BufWritePre', {
+  --     buffer = bufnr,
+  --     command = 'EslintFixAll',
+  --   })
+  -- end,
 }
 require('telescope').setup {
   defaults = {
@@ -511,7 +511,7 @@ vim.defer_fn(function()
         init_selection = '<c-space>',
         node_incremental = '<c-space>',
         scope_incremental = '<c-s>',
-        node_decremental = '<M-space>',
+        node_decremental = '<BS>',
       },
     },
     textobjects = {
