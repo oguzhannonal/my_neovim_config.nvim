@@ -25,11 +25,9 @@ return {
         return
       end
 
-      return { lsp_fallback = true, async = true, timeout_ms = 5000 }
+      return { lsp_fallback = true, async = false, timeout_ms = 5000 }
     end,
     config = function(_, opts)
-      local util = require 'conform.util'
-      util.add_formatter_args(require 'conform.formatters.eslint_d', { '--cache' })
       require('conform').setup(opts)
     end,
   },

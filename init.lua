@@ -451,7 +451,7 @@ local trouble = require 'trouble.providers.telescope'
 local lspconfig = require 'lspconfig'
 lspconfig.eslint.setup {
   on_attach = function(client, bufnr)
-    vim.api.nvim_create_autocmd('BufWritePre', {
+    vim.api.nvim_create_autocmd('BufWritePost', {
       buffer = bufnr,
       command = 'EslintFixAll',
     })
@@ -582,12 +582,12 @@ local on_attach = function(client, bufnr)
   -- end
   -- if client.name == 'eslint' then
   --   print 'eslint'
-  --   vim.api.nvim_create_autocmd('BufWritePre', {
+  --   vim.api.nvim_create_autocmd('BufWritePost', {
   --     buffer = bufnr,
   --     pattern = { '*.js', '*.jsx', '*.ts', '*.tsx', '*.vue' },
   --     command = 'EslintFixAll',
   --   })
-  --/ end
+  -- end
   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
