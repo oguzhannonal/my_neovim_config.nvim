@@ -4,7 +4,6 @@ end
 local imap = function(keys, func, desc)
   vim.keymap.set('i', keys, func, { buffer = bufnr, desc = desc, noremap = true, silent = true })
 end
-
 nmap('<leader>e', '<Cmd>:NvimTreeToggle<cr>', 'File Explorer')
 -- save file
 nmap('<C-s>', '<Cmd>:w<cr>', 'Save File')
@@ -18,8 +17,6 @@ nmap('<leader>q', '<Cmd>:bd<cr>', 'Close Buffer')
 -- :noh
 nmap('<leader>n', '<Cmd>:noh<cr>', 'No Highlight')
 -- harpoon keymaps
-nmap('<leader>hh', '<Cmd>:lua require("harpoon.ui").toggle_quick_menu()<cr>', 'Harpoon Quick Menu')
-nmap('<leader>ha', '<Cmd>:lua require("harpoon.mark").add_file()<cr>', 'Harpoon Add File')
 nmap('<A-1>', '<Cmd>:lua require("harpoon.ui").nav_file(1)<cr>', 'Harpoon Nav File 1')
 nmap('<A-2>', '<Cmd>:lua require("harpoon.ui").nav_file(2)<cr>', 'Harpoon Nav File 2')
 nmap('<A-3>', '<Cmd>:lua require("harpoon.ui").nav_file(3)<cr>', 'Harpoon Nav File 3')
@@ -65,4 +62,3 @@ end, 'Trouble LSP References')
 nmap('<leader>gv', function()
   require('diffview').open()
 end, 'Diffview Open')
-return {}
