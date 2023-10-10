@@ -8,6 +8,11 @@ return {
       {
         'williamboman/mason-lspconfig.nvim',
         config = function()
+          local signs = { Error = ' ', Warn = ' ', Hint = '󰠠 ', Info = ' ' }
+          for type, icon in pairs(signs) do
+            local hl = 'DiagnosticSign' .. type
+            vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = '' })
+          end
           local on_attach = function(client, bufnr)
             -- NOTE: Remember that lua is a real programming language, and as such it is possible
             -- to define small helper and utility functions so you don't have to repeat yourself

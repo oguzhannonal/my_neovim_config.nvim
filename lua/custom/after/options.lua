@@ -7,7 +7,8 @@ vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = tr
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 -- Make line numbers default
 vim.wo.number = true
-
+vim.opt.wrap = false
+vim.opt.swapfile = false
 -- Enable mouse mode
 vim.o.mouse = 'a'
 

@@ -86,13 +86,11 @@ end
 nmap('<leader>gd', ':lua git_diff()<CR>', 'Changed Files')
 -- trouble
 
-nmap('<leader>xx', function()
-  require('trouble').open()
-end, 'Trouble Toggle')
+-- get telescope diagnostics and show in :copen
 nmap('<leader>xw', function()
   require('trouble').open 'workspace_diagnostics'
 end, 'Trouble Workspace Diagnostics')
-nmap('<leader>xd', function()
+nmap('<leader>xx', function()
   require('trouble').open 'document_diagnostics'
 end, 'Trouble Document Diagnostics')
 nmap('<leader>xq', function()
