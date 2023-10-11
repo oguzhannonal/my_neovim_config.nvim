@@ -14,12 +14,6 @@ return {
             vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = '' })
           end
           local on_attach = function(client, bufnr)
-            -- NOTE: Remember that lua is a real programming language, and as such it is possible
-            -- to define small helper and utility functions so you don't have to repeat yourself
-            -- many times.
-            --
-            -- In this case, we create a function that lets us more easily define mappings specific
-            -- for LSP related items. It sets the mode, buffer and description for us each time.
             local nmap = function(keys, func, desc)
               if desc then
                 desc = 'LSP: ' .. desc
@@ -62,33 +56,11 @@ return {
               print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
             end, '[W]orkspace [L]ist Folders')
 
-            -- vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-            --   vim.lsp.buf.format()
-            -- end, { desc = 'Format current buffer with LSP' })
+            vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
+              vim.lsp.buf.format()
+            end, { desc = 'Format current buffer with LSP' })
           end
 
-          -- document existing key chains
-          require('which-key').register {
-            ['<leader>p'] = { '<cmd>Telescope neoclip<cr>', 'Browse Register' },
-            ['<leader>ss'] = { '<cmd>Telescope live_grep_args<cr>', 'Live grep args' },
-            ['<leader>x'] = { name = 'Trouble', _ = 'which_key_ignore' },
-            ['<leader>c'] = { name = 'Code', _ = 'which_key_ignore' },
-            ['<leader>d'] = { name = 'Document', _ = 'which_key_ignore' },
-            ['<leader>g'] = { name = 'Git', _ = 'which_key_ignore' },
-            ['<leader>h'] = { name = 'Harpoon', _ = 'which_key_ignore' },
-            ['<leader>r'] = { name = 'Rename', _ = 'which_key_ignore' },
-            ['<leader>s'] = { name = 'Search', _ = 'which_key_ignore' },
-            ['<leader>w'] = { name = 'Workspace', _ = 'which_key_ignore' },
-          }
-
-          -- Enable the following language servers
-          --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
-          --
-          --  Add any additional override configuration in the following tables. They will be passed to
-          --  the `settings` field of the server config. You must look up that documentation yourself.
-          --
-          --  If you want to override the default filetypes that your language server will attach to you can
-          --  define the property 'filetypes' to the map in question.
           local servers = {
             -- clangd = {},
             -- gopls = {},
@@ -130,12 +102,7 @@ return {
           }
         end,
       },
-
-      -- Useful status updates for LSP
-      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
       { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
-
-      -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
     },
   },
