@@ -4,7 +4,7 @@ end
 local imap = function(keys, func, desc)
   vim.keymap.set('i', keys, func, { buffer = bufnr, desc = desc, noremap = true, silent = true })
 end
-nmap('<leader>e', '<Cmd>:NvimTreeToggle<cr>', 'File Explorer')
+nmap('<leader>e', '<Cmd>:lua MiniFiles.open()<cr>', 'File Explorer')
 -- save file
 nmap('<C-s>', '<Cmd>:w<cr>', 'Save File')
 nmap('<C-h>', '<C-w>h', 'Resize Left')
