@@ -4,7 +4,9 @@ end
 local imap = function(keys, func, desc)
   vim.keymap.set('i', keys, func, { buffer = bufnr, desc = desc, noremap = true, silent = true })
 end
-nmap('<leader>e', '<Cmd>:NvimTreeOpen<cr>', 'File Explorer')
+nmap('<leader>e', '<Cmd>:Oil --float .<cr>', 'File Explorer')
+
+vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
 -- save file
 nmap('<C-s>', '<Cmd>:w<cr>', 'Save File')
 nmap('<C-h>', '<C-w>h', 'Resize Left')
@@ -51,6 +53,9 @@ function _G.git_diff(opts)
   local uncommitted_cmd = 'git diff --name-only'
   local uncommitted_list = vim.fn.systemlist(uncommitted_cmd)
 
+  -- use git diff to get new files
+  local new_files_cmd = 'git diff --name-only --diff-filter=A'
+  local new_files_list = vim.fn.systemlist(new_files_cmd)
   -- Use git diff to get the list of changed files between the current branch and main branch
   local diff_cmd = string.format('git diff --name-only %s..%s', main_branch, current_branch)
   local diff_list = vim.fn.systemlist(diff_cmd)
@@ -62,7 +67,9 @@ function _G.git_diff(opts)
   for _, file in ipairs(uncommitted_list) do
     unique_files[file] = true
   end
-
+  for _, file in ipairs(new_files_list) do
+    unique_files[file] = true
+  end
   -- Add files from diff_list to the set
   for _, file in ipairs(diff_list) do
     unique_files[file] = true
