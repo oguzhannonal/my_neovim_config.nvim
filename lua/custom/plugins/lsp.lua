@@ -69,6 +69,12 @@ return {
             -- tsserver = {},
             -- html = { filetypes = { 'html', 'twig', 'hbs'} },
             volar = {},
+            marksman = {
+              filetypes = { 'markdown' },
+            },
+            tailwindcss = {
+              filetypes = { 'py' },
+            },
             lua_ls = {
               Lua = {
                 workspace = { checkThirdParty = false },

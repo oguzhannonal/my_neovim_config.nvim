@@ -85,7 +85,6 @@ require('lazy').setup({
     'hrsh7th/cmp-nvim-lsp',
   },
   'tpope/vim-sleuth',
-
   {
     'nvim-lualine/lualine.nvim',
     opts = {
