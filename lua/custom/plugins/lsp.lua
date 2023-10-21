@@ -81,6 +81,7 @@ return {
                 telemetry = { enable = false },
               },
             },
+            astro = {},
           }
 
           -- Setup neovim lua configuration
