@@ -1,3 +1,4 @@
+local options = vim.opt
 vim.o.hlsearch = true
 
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
