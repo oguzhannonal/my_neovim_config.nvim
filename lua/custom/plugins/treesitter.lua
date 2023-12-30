@@ -29,9 +29,6 @@ return {
       },
 
       -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
-      context_commentstring = {
-        enable = true,
-      },
       auto_install = false,
       autotag = { enable = true },
       highlight = { enable = true, additional_vim_regex_highlighting = false },

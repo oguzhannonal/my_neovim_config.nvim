@@ -22,10 +22,10 @@ return {
               vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
             end
             -- if client name is volar, disable formattingOptions
-            -- if client.name == 'volar' then
-            --   client.server_capabilities.documentRangeFormattingProvider = false
-            --   client.server_capabilities.documentFormattingProvider = false
-            -- end
+            if client.name == 'volar' then
+              client.server_capabilities.documentRangeFormattingProvider = false
+              client.server_capabilities.documentFormattingProvider = false
+            end
             -- if client.name == 'eslint' then
             --   print 'eslint'
             --   vim.api.nvim_create_autocmd('BufWritePost', {
@@ -109,7 +109,7 @@ return {
           }
         end,
       },
-      { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
+      { 'j-hui/fidget.nvim',       tag = 'legacy', opts = {} },
       'folke/neodev.nvim',
     },
   },

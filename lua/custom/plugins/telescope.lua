@@ -19,15 +19,6 @@ return {
   },
   config = function()
     local trouble = require 'trouble.providers.telescope'
-    local lspconfig = require 'lspconfig'
-    lspconfig.eslint.setup {
-      on_attach = function(client, bufnr)
-        vim.api.nvim_create_autocmd('BufWritePost', {
-          buffer = bufnr,
-          command = 'EslintFixAll',
-        })
-      end,
-    }
     require('telescope').setup {
       defaults = {
         mappings = {
