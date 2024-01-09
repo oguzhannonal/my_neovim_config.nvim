@@ -1,6 +1,12 @@
 local options = vim.opt
 vim.o.hlsearch = true
-
+local ok_osc52, osc52 = pcall(require, 'osc52')
+if ok_osc52 then
+  vim.keymap.set('n', '<leader>c', osc52.copy_operator, { expr = true })
+  vim.keymap.set('n', '<leader>cc', '<leader>c_', { remap = true })
+  vim.keymap.set('x', '<leader>c', osc52.copy_visual)
+  -- TODO: show return status in command line without popup
+end
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
 -- Remap for dealing with word wrap

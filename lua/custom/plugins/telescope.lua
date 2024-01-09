@@ -26,6 +26,11 @@ return {
           n = { ['<c-t>'] = trouble.open_with_trouble },
         },
       },
+      pickers = {
+        find_files = {
+          hidden = true,
+        },
+      }
     }
 
     -- Enable telescope fzf native, if installed
@@ -51,5 +56,6 @@ return {
     vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
     vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
     vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
+    vim.keymap.set('n', '<leader>sb', require('telescope.builtin').git_branches, { desc = '[S]earch [C]ommands' })
   end,
 }
