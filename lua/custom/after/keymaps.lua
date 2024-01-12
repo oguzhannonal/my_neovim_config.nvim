@@ -38,6 +38,9 @@ nmap('<A-4>', '<Cmd>:lua require("harpoon.ui").nav_file(4)<cr>', 'Harpoon Nav Fi
 --     })
 --     :find()
 -- end
+vim.api.nvim_set_keymap('n', '<leader>f',
+  ':lua require("conform").format({lsp_fallback = true , timeout_ms = 500 , async = false})<CR>',
+  { noremap = true, silent = true })
 function _G.git_diff(opts)
   local pickers = require 'telescope.pickers'
   local finders = require 'telescope.finders'
@@ -83,13 +86,14 @@ function _G.git_diff(opts)
 
   -- Create a telescope picker to display the list of uncommitted changes and changes between branches
   pickers
-    .new(opts, {
-      prompt_title = 'git diff',
-      finder = finders.new_table { results = list },
-      sorter = conf.generic_sorter(opts),
-    })
-    :find()
+      .new(opts, {
+        prompt_title = 'git diff',
+        finder = finders.new_table { results = list },
+        sorter = conf.generic_sorter(opts),
+      })
+      :find()
 end
+
 nmap('<leader>gd', ':lua git_diff()<CR>', 'Changed Files')
 -- trouble
 
