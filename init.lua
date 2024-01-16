@@ -82,6 +82,12 @@ require('lazy').setup({
     end,
   },
   {
+    "zbirenbaum/copilot-cmp",
+    config = function()
+      require("copilot_cmp").setup()
+    end
+  },
+  {
     'hrsh7th/cmp-nvim-lsp',
   },
   'tpope/vim-sleuth',
