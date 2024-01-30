@@ -4,9 +4,8 @@ end
 local imap = function(keys, func, desc)
   vim.keymap.set('i', keys, func, { buffer = bufnr, desc = desc, noremap = true, silent = true })
 end
-nmap('<leader>e', '<Cmd>:Oil --float .<cr>', 'File Explorer')
+nmap('<leader>e', '<CMD>:lua MiniFiles.open()<CR>', 'File Explorer')
 
-vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
 -- save file
 nmap('<C-s>', '<Cmd>:w<cr>', 'Save File')
 nmap('<C-h>', '<C-w>h', 'Resize Left')

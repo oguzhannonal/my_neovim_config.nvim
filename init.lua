@@ -1,4 +1,3 @@
----@diagnostic disable: missing-fields
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -82,15 +81,22 @@ require('lazy').setup({
     end,
   },
   {
-    "zbirenbaum/copilot-cmp",
+    'zbirenbaum/copilot-cmp',
     config = function()
-      require("copilot_cmp").setup()
-    end
+      require('copilot_cmp').setup()
+    end,
   },
   {
     'hrsh7th/cmp-nvim-lsp',
   },
   'tpope/vim-sleuth',
+  {
+    'echasnovski/mini.files',
+    version = '*',
+    config = function()
+      require('mini.files').setup()
+    end,
+  },
   {
     'nvim-lualine/lualine.nvim',
     opts = {
