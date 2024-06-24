@@ -97,16 +97,16 @@ require('lazy').setup({
       require('mini.files').setup()
     end,
   },
-  {
-    'nvim-lualine/lualine.nvim',
-    opts = {
-      options = {
-        icons_enabled = false,
-        component_separators = '|',
-        section_separators = '',
-      },
-    },
-  },
+  -- {
+  --   'nvim-lualine/lualine.nvim',
+  --   opts = {
+  --     options = {
+  --       icons_enabled = false,
+  --       component_separators = '|',
+  --       section_separators = '',
+  --     },
+  --   },
+  -- },
   { import = 'custom.plugins' },
 }, {})
 

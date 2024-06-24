@@ -22,10 +22,10 @@ return {
               vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
             end
             -- if client name is volar, disable formattingOptions
-            if client.name == 'volar' then
-              client.server_capabilities.documentRangeFormattingProvider = false
-              client.server_capabilities.documentFormattingProvider = false
-            end
+            -- if client.name == 'volar' then
+            --   client.server_capabilities.documentRangeFormattingProvider = false
+            --   client.server_capabilities.documentFormattingProvider = false
+            -- end
             -- if client.name == 'eslint' then
             --   print 'eslint'
             --   vim.api.nvim_create_autocmd('BufWritePost', {
@@ -68,7 +68,6 @@ return {
             -- rust_analyzer = {},
             -- tsserver = {},
             -- html = { filetypes = { 'html', 'twig', 'hbs'} },
-            volar = {},
             marksman = {
               filetypes = { 'markdown' },
             },
@@ -95,6 +94,26 @@ return {
           mason_lspconfig.setup {
             ensure_installed = vim.tbl_keys(servers),
           }
+          local lspconfig = require('lspconfig')
+
+          lspconfig.tsserver.setup {
+            init_options = {
+              plugins = {
+                {
+                  name = '@vue/typescript-plugin',
+                  location = '/home/oguz/.local/share/nvim/mason/bin/vue-language-server',
+                  languages = { 'vue' },
+                },
+              },
+            },
+
+            lspconfig.volar.setup {
+              init_options = {
+                vue = {
+                  hybridMode = false,
+                },
+              },
+            }, }
           mason_lspconfig.setup_handlers {
 
             function(server_name)

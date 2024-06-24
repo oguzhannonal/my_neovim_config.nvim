@@ -22,6 +22,8 @@ nmap('<A-1>', '<Cmd>:lua require("harpoon.ui").nav_file(1)<cr>', 'Harpoon Nav Fi
 nmap('<A-2>', '<Cmd>:lua require("harpoon.ui").nav_file(2)<cr>', 'Harpoon Nav File 2')
 nmap('<A-3>', '<Cmd>:lua require("harpoon.ui").nav_file(3)<cr>', 'Harpoon Nav File 3')
 nmap('<A-4>', '<Cmd>:lua require("harpoon.ui").nav_file(4)<cr>', 'Harpoon Nav File 4')
+
+nmap('<leader>gv', '<Cmd>:lua MiniDiff.toggle_overlay()<cr>', 'Toggle Diff Overlay')
 -- function _G.git_diff(opts)
 --   local pickers = require 'telescope.pickers'
 --   local finders = require 'telescope.finders'
@@ -114,6 +116,6 @@ nmap('gR', function()
 end, 'Trouble LSP References')
 
 -- diffview keymaps
-nmap('<leader>gv', function()
-  require('diffview').open()
-end, 'Diffview Open')
+-- nmap('<leader>gv', function()
+--   require('mini.diff').open()
+-- end, 'Diffview Open')
