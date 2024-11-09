@@ -81,6 +81,7 @@ return {
               },
             },
             astro = {},
+            rust_analyzer = {}
           }
 
           -- Setup neovim lua configuration
