@@ -1,18 +1,18 @@
 return {
-  'folke/which-key.nvim',
+  "folke/which-key.nvim",
+  event = "VeryLazy",
   opts = {},
-  config = function()
-    require('which-key').register {
-      ['<leader>p'] = { '<cmd>Telescope neoclip<cr>', 'Browse Register' },
-      ['<leader>ss'] = { '<cmd>Telescope live_grep_args<cr>', 'Live grep args' },
-      ['<leader>x'] = { name = 'Trouble', _ = 'which_key_ignore' },
-      ['<leader>c'] = { name = 'Code', _ = 'which_key_ignore' },
-      ['<leader>d'] = { name = 'Document', _ = 'which_key_ignore' },
-      ['<leader>g'] = { name = 'Git', _ = 'which_key_ignore' },
-      ['<leader>h'] = { name = 'Harpoon', _ = 'which_key_ignore' },
-      ['<leader>r'] = { name = 'Rename', _ = 'which_key_ignore' },
-      ['<leader>s'] = { name = 'Search', _ = 'which_key_ignore' },
-      ['<leader>w'] = { name = 'Workspace', _ = 'which_key_ignore' },
-    }
-  end,
+  keys = {
+    { "<leader>?", function() require("which-key").show({ global = false }) end, desc = "Buffer Local Keymaps (which-key)" },
+    { "<leader>h", "<cmd><cr>", desc = "Harpoon"  },
+    { "<leader>c", "<cmd><cr>",desc = "Code" },
+    { "<leader>x", "<cmd><cr>", desc = "Trouble" },
+    { "<leader>d", "<cmd><cr>", desc = "Document" },
+    { "<leader>g", "<cmd><cr>", desc = "Git" },
+    { "<leader>ss", "<cmd>Telescope live_grep_args<cr>", desc = "Live Grep Args" },
+    { "<leader>r", "<cmd><cr>", desc = "Rename" },
+    { "<leader>p", "<cmd>Telescope neoclip<cr>", desc = "Clipboard History" },
+    { "<leader>w", "<cmd><cr>", desc = "Workspace" },
+    { "<leader>s", "<cmd><cr>", desc = "Search" },
+  },
 }

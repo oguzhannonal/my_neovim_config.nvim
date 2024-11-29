@@ -39,9 +39,7 @@ nmap('<leader>gv', '<Cmd>:lua MiniDiff.toggle_overlay()<cr>', 'Toggle Diff Overl
 --     })
 --     :find()
 -- end
-vim.api.nvim_set_keymap('n', '<leader>f',
-  ':lua require("conform").format({lsp_fallback = true , timeout_ms = 500 , async = false})<CR>',
-  { noremap = true, silent = true })
+nmap('<leader>f', '<cmd>lua require("conform").format({lsp_fallback = true, timeout_ms = 500, async = false})<cr>', 'Reformat')
 function _G.git_diff(opts)
   local pickers = require 'telescope.pickers'
   local finders = require 'telescope.finders'
