@@ -16,16 +16,16 @@ return {
     }
 
     local lint_augroup = vim.api.nvim_create_augroup('lint', { clear = true })
-    local eslint_augroup = vim.api.nvim_create_augroup('eslintfix', { clear = true })
-    local eslint = require('lint').linters.eslint_d
-    eslint.args = {
-      '--stdin',
-      '--stdin-filename',
-      function()
-        return vim.api.nvim_buf_get_name(0)
-      end,
-      '--cache',
-    }
+    -- local eslint_augroup = vim.api.nvim_create_augroup('eslintfix', { clear = true })
+    -- local eslint = require('lint').linters.eslint_d
+    -- eslint.args = {
+    --   '--stdin',
+    --   '--stdin-filename',
+    --   function()
+    --     return vim.api.nvim_buf_get_name(0)
+    --   end,
+    --   '--cache',
+    -- }
     -- vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'InsertLeave', 'TextChanged' }, {
     --   group = lint_augroup,
     --   callback = function()

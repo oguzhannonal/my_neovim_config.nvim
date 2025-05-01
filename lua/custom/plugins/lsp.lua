@@ -96,25 +96,144 @@ return {
             ensure_installed = vim.tbl_keys(servers),
           }
           local lspconfig = require('lspconfig')
+          local mason_registry = require('mason-registry')
+          local vue_language_server_path = mason_registry.get_package('vue-language-server'):get_install_path()
+          local capabilities = vim.lsp.protocol.make_client_capabilities()
+          capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+          lspconfig.volar.setup({
+            on_attach = on_attach,
+            capabilities = capabilities,
+            -- NOTE: Uncomment to enable volar in file types other than vue.
+            -- (Similar to Takeover Mode)
 
-          lspconfig.tsserver.setup {
+            -- filetypes = { "vue", "javascript", "typescript", "javascriptreact", "typescriptreact", "json" },
+
+            -- NOTE: Uncomment to restrict Volar to only Vue/Nuxt projects. This will enable Volar to work alongside other language servers (tsserver).
+
+            -- root_dir = require("lspconfig").util.root_pattern(
+            --   "vue.config.js",
+            --   "vue.config.ts",
+            --   "nuxt.config.js",
+            --   "nuxt.config.ts"
+            -- ),
             init_options = {
-              plugins = {
-                {
-                  name = '@vue/typescript-plugin',
-                  location = '/home/oguz/.local/share/nvim/mason/bin/vue-language-server',
-                  languages = { 'vue' },
+              vue = {
+                hybridMode = false,
+              },
+              -- NOTE: This might not be needed. Uncomment if you encounter issues.
+
+              typescript = {
+                tsdk = '/home/ogz/.nvm/versions/node/v22.11.0/lib/node_modules/typescript/lib', 
+              },
+            },
+            settings = {
+              typescript = {
+                inlayHints = {
+                  enumMemberValues = {
+                    enabled = true,
+                  },
+                  functionLikeReturnTypes = {
+                    enabled = true,
+                  },
+                  propertyDeclarationTypes = {
+                    enabled = true,
+                  },
+                  parameterTypes = {
+                    enabled = true,
+                    suppressWhenArgumentMatchesName = true,
+                  },
+                  variableTypes = {
+                    enabled = true,
+                  },
                 },
               },
             },
+          })
+          local mason_packages = vim.fn.stdpath("data") .. "/mason/packages"
+          local volar_path = '/home/ogz/.nvm/versions/node/v22.11.0/lib/node_modules/@vue/language-server' 
+          lspconfig.ts_ls.setup({
+            capabilities = capabilities, 
+            on_attach = on_attach,
 
-            lspconfig.volar.setup {
-              init_options = {
-                vue = {
-                  hybridMode = false,
+            -- NOTE: To enable Hybrid Mode, change hybrideMode to true above and uncomment the following filetypes block.
+            -- WARN: THIS MAY CAUSE HIGHLIGHTING ISSUES WITHIN THE TEMPLATE SCOPE WHEN TSSERVER ATTACHES TO VUE FILES
+
+            -- filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+            init_options = {
+              plugins = {
+                {
+                  name = "@vue/typescript-plugin",
+                  location = volar_path,
+                  languages = { "vue" },
                 },
               },
-            }, }
+            },
+          })
+          -- lspconfig.volar.setup {
+          --   init_options = {
+          --     vue = {
+          --       hybridMode = false,
+          --     },
+          --   },
+          --   capabilities = require('cmp_nvim_lsp').default_capabilities(),
+          --   on_attach = on_attach,
+          -- }
+
+
+
+          lspconfig.eslint.setup({
+            capabilities=capabilities,
+            on_attach = function(client, bufnr)
+              vim.api.nvim_create_autocmd("BufWritePre", {
+                buffer = bufnr,
+                command = "EslintFixAll",
+              })
+             client.resolved_capabilities.document_formatting = allow_formatting
+             client.resolved_capabilities.document_range_formatting = allow_formatting
+            end,
+          })
+
+
+          -- lspconfig.ts_ls.setup {
+          --   capabilities = require('cmp_nvim_lsp').default_capabilities(),
+          --   on_attach = on_attach,
+          --   init_options = {
+              
+          --   },
+          --   filetypes = { 'typescript', 'javascript' },
+          -- }
+
+          -- No need to set `hybridMode` to `true` as it's the default value
+          -- local util = require 'lspconfig.util'
+          -- local function get_typescript_server_path(root_dir)
+          
+          --   local global_ts = '/home/ogz/.nvm/versions/node/v22.11.0/lib/node_modules/typescript/lib'
+          --   -- Alternative location if installed as root:
+          --   -- local global_ts = '/usr/local/lib/node_modules/typescript/lib'
+          --   local found_ts = ''
+          --   local function check_dir(path)
+          --     found_ts =  util.path.join(path, 'node_modules', 'typescript', 'lib')
+          --     if util.path.exists(found_ts) then
+          --       return path
+          --     end
+          --   end
+          --   if util.search_ancestors(root_dir, check_dir) then
+          --     return found_ts
+          --   else
+          --     return global_ts
+          --   end
+          -- end
+          
+          -- lspconfig.volar.setup({
+          --   filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+          --   capabilities = require('cmp_nvim_lsp').default_capabilities(),
+          --   on_attach = on_attach,
+          --   init_options = {
+          --     typescript = {
+          --       tsdk = get_typescript_server_path(vim.fn.getcwd()),
+          --     },
+          --   },
+          -- })
           mason_lspconfig.setup_handlers {
 
             function(server_name)
