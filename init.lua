@@ -47,25 +47,8 @@ require('lazy').setup({
     event = 'InsertEnter',
     config = function()
       require('copilot').setup {
-        panel = {
-          keymap = {
-            jump_next = '<c-j>',
-            jump_prev = '<c-k>',
-            accept = '<c-l>',
-            refresh = 'r',
-            open = '<M-CR>',
-          },
-        },
-        suggestion = {
-          enabled = true,
-          auto_trigger = true,
-          keymap = {
-            accept = '<c-l>',
-            next = '<c-j>',
-            prev = '<c-k>',
-            dismiss = '<c-h>',
-          },
-        },
+        panel = { enabled = false },
+        suggestion = { enabled = false },
         filetypes = {
           yaml = false,
           markdown = true,

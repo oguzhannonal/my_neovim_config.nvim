@@ -76,13 +76,6 @@ return {
         },
         astro = {},
         rust_analyzer = {},
-        volar = {
-          init_options = {
-            vue = {
-              hybridMode = false,
-            },
-          },
-        },
         ts_ls = {
           init_options = {
             plugins = {
@@ -98,6 +91,14 @@ return {
       }
 
       require('mason').setup()
+
+      require('mason-tool-installer').setup {
+        ensure_installed = {
+          'stylua',
+          'prettierd',
+          'beautysh',
+        },
+      }
 
       -- Ensure the servers above are installed
       local ensure_installed = vim.tbl_keys(servers)

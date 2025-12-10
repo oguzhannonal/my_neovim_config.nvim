@@ -1,32 +1,38 @@
 return {
   'stevearc/conform.nvim',
   opts = {
-    quiet = true,
+    quiet = false,
     formatters_by_ft = {
-      typescript = { 'prettierd' },
-      typescriptreact = { 'prettierd' },
-      javascript = { 'prettierd' },
-      javascriptreact = { 'prettierd' },
-      json = { 'prettierd' },
-      html = { 'prettierd' },
-      css = { 'prettierd' },
-      scss = { 'prettierd' },
-      markdown = { 'prettierd' },
-      yaml = { 'prettierd' },
+      typescript = { 'prettier' },
+      typescriptreact = { 'prettier' },
+      javascript = { 'prettier' },
+      javascriptreact = { 'prettier' },
+      json = { 'prettier' },
+      html = { 'prettier' },
+      css = { 'prettier' },
+      scss = { 'prettier' },
+      markdown = { 'prettier' },
+      yaml = { 'prettier' },
       sh = { 'beautysh' },
       zsh = { 'beautysh' },
-      vue = { 'prettierd' },
+      vue = { 'prettier' },
       lua = { 'stylua' },
     },
-    format_on_save = false,
-    --   -- Disable autoformat for files in a certain path
-    --   local bufname = vim.api.nvim_buf_get_name(bufnr)
-    --   if bufname:match '/node_modules/' then
-    --     return
-    --   end
-    --
-    --   return { lsp_fallback = true, async = false, timeout_ms = 500 }
-    -- end,
+    formatters = {
+      prettier = {
+        command = "/home/ogz/.config/nvim/utils/node_modules/.bin/prettier",
+        args = {
+          '--config',
+          '/home/ogz/.config/nvim/utils/prettierrc.cjs',
+          '--stdin-filepath',
+          '$FILENAME',
+        },
+      },
+    },
+    format_on_save = {
+      timeout_ms = 500,
+      lsp_fallback = true,
+    },
     config = function(_, opts)
       require('conform').setup(opts)
     end,
